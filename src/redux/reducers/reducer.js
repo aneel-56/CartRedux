@@ -8,20 +8,9 @@ export const cartreducer = (state = INIT_STATE, action) => {
       const itemIndex = state.carts.findIndex(
         (item) => item.id === action.payload.id
       );
-
       if (itemIndex >= 0) {
-        // Update the quantity of the existing item
-        const updatedCarts = state.carts.map((item, index) =>
-          index === itemIndex
-            ? { ...item, qnty: item.qnty + 1 } // Create a new object for the updated item
-            : item
-        );
-        return {
-          ...state,
-          carts: updatedCarts,
-        };
+        state.carts[itemIndex].qnty += 1;
       } else {
-        // Add a new item to the cart
         const temp = { ...action.payload, qnty: 1 };
         return {
           ...state,
@@ -29,7 +18,9 @@ export const cartreducer = (state = INIT_STATE, action) => {
         };
       }
     }
-
+    
+    
+    // eslint-disable-next-line no-fallthrough
     case "RMV_CART": {
       const filteredCarts = state.carts.filter(
         (ele) => ele.id !== action.payload
@@ -39,38 +30,18 @@ export const cartreducer = (state = INIT_STATE, action) => {
         carts: filteredCarts,
       };
     }
-
     case "RMV_ONE": {
       const itemIndexDec = state.carts.findIndex(
         (item) => item.id === action.payload.id
       );
-
-      if (itemIndexDec >= 0) {
-        if (state.carts[itemIndexDec].qnty > 1) {
-          // Decrease the quantity
-          const updatedCarts = state.carts.map((item, index) =>
-            index === itemIndexDec
-              ? { ...item, qnty: item.qnty - 1 } // Create a new object for the updated item
-              : item
-          );
-          return {
-            ...state,
-            carts: updatedCarts,
-          };
-        } else {
-          // Remove the item if quantity is 1
-          const filteredCarts = state.carts.filter(
-            (ele) => ele.id !== action.payload.id
-          );
-          return {
-            ...state,
-            carts: filteredCarts,
-          };
-        }
+      if (state.carts[itemIndexDec].qnty >= 1) {
+        const dltitems = (state.carts[itemIndexDec].qnty -= 1);
+        console.log([...state.carts, dltitems]);
+        return { ...state, carts: [...state.carts] };
       }
-      return state;
     }
-
+    
+    // eslint-disable-next-line no-fallthrough
     default:
       return state;
   }

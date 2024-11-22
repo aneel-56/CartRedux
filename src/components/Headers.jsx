@@ -1,12 +1,9 @@
-// import React from "react";
 import { useEffect, useState } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Badge from "@mui/material/Badge";
 import "./styles.css";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import { NavLink } from "react-router-dom";
-// import Menu from "@mui/materials/Menu";
-// import MenuItem from "@mui/material/MenuItem";
 import { Menu } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Table from "react-bootstrap/Table";

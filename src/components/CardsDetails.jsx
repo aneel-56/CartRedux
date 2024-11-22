@@ -61,7 +61,7 @@ const CardsDetails = () => {
                           <strong>Dishes</strong> : {ele.address}
                         </p>
                         <p>
-                          <strong>Total</strong> :Rs. 300
+                          <strong>Total</strong> :{ele.price * ele.qnty}
                         </p>
                         <div
                           className="mt-5 d-flex justify-center align-items-center"
@@ -73,18 +73,20 @@ const CardsDetails = () => {
                         >
                           <span
                             style={{ fontSize: 24 }}
-                            onClick={() => remove(ele)}
+                            onClick={
+                              ele.qnty <= 1
+                                ? () => dlt(ele.id)
+                                : () => remove(ele)
+                            }
                           >
-                            {" "}
-                            -{" "}
+                            -
                           </span>
-                          <span style={{ fontSize: 24 }}> {ele.quantity}</span>
+                          <span style={{ fontSize: 24 }}> {ele.qnty}</span>
                           <span
                             style={{ fontSize: 24 }}
                             onClick={() => send(ele)}
                           >
-                            {" "}
-                            +{" "}
+                            +
                           </span>
                         </div>
                       </td>
@@ -106,7 +108,7 @@ const CardsDetails = () => {
                           <strong>Order Review: </strong>
                           <span>{ele.somedata}</span>
                         </p>
-                        <p onClick={dlt(ele.id)}>
+                        <p onClick={() => dlt(ele)}>
                           <strong>Remove: </strong>
                           <span
                             className="fas fa-trash"
